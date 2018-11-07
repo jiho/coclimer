@@ -2,7 +2,7 @@
 #'
 #' @inheritParams plot_multi
 #'
-#' @return A ggplot2 object.
+#' @return A ggplot2 plot.
 #'
 #' @import ggplot2
 #' @import dplyr

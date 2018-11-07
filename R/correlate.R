@@ -1,8 +1,11 @@
 #' Look for correlations with environment
 #'
-#' @param y Vector of the response variable: observed concentrations, presence/absence, etc.
+#' @param y vector of the response variable: observed concentrations, presence/absence, etc.
 #' @param env data.frame or matrix of environmental variables associated with these observations
+#' @param n number of environmental variables to display, ordered in decreasing order of importance.
 #' @param ... passed to `ranger::ranger()`
+#'
+#' @return A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance measure" is in the label of the subplot; NB: this is *not* a percentage of variance explained).
 #'
 #' @examples
 #' library("dplyr")

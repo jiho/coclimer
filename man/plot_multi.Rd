@@ -7,12 +7,14 @@
 plot_multi(x, ..., trans = "identity")
 }
 \arguments{
-\item{x}{Data.frame with a column called \code{date} and other columns for concentration of various species.}
+\item{x}{data.frame with a column called \code{date} and other columns for concentration of various species.}
 
-\item{...}{Columns to plot, specified in a way compatible with \code{dplyr::select()}}
+\item{...}{columns to plot, specified in a way compatible with \code{dplyr::select()}}
+
+\item{trans}{name of a transformation function applied to y axis. Exemples are "identity" for no transformation "sqrt" for square root, "log10" for log in base 10, "log1p" for log(n+1).}
 }
 \value{
-A ggplot2 object.
+A ggplot2 plot.
 }
 \description{
 Plot a multivariate time series of occurrence

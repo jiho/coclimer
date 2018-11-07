@@ -7,11 +7,16 @@
 correlate(y, env, n = 6, ...)
 }
 \arguments{
-\item{y}{Vector of the response variable: observed concentrations, presence/absence, etc.}
+\item{y}{vector of the response variable: observed concentrations, presence/absence, etc.}
 
 \item{env}{data.frame or matrix of environmental variables associated with these observations}
 
+\item{n}{number of environmental variables to display, ordered in decreasing order of importance.}
+
 \item{...}{passed to \code{ranger::ranger()}}
+}
+\value{
+A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance measure" is in the label of the subplot; NB: this is \emph{not} a percentage of variance explained).
 }
 \description{
 Look for correlations with environment
