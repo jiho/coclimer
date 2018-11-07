@@ -1,0 +1,71 @@
+---
+output:
+  md_document:
+    variant: markdown_github
+---
+
+# cloclimer
+
+R package to standardise statistical analyses of time series in the CoClime project.
+
+## Installation
+
+The package is not on CRAN. Install it with
+
+```{r install, eval=FALSE}
+# if needed
+install.packages("devtools")
+# then
+devtools::install_github("jiho/coclimer")
+```
+
+
+## Usage
+
+Load the package
+
+```{r load}
+library("coclimer")
+```
+
+A test dataset is included in the package, containing the concentration of *Ostreopsis ovata* in two forms and environemental variables. Read more about it with
+
+```{r help, eval=F}
+?ost
+```
+
+Make it available and inspect it with
+
+```{r inspect}
+data(ost)
+head(ost)
+```
+
+Your data should be made to look the same: a `date` column, columns for species concentrations/abundances, columns for environmental variables.
+
+Plot the data
+
+```{r plot}
+# full time series
+plot_multi(ost, benthic:planktonic)
+plot_multi(ost, benthic:planktonic, trans="sqrt")
+# seasonal view
+plot_seasonal(ost, benthic:planktonic, trans="sqrt")
+```
+
+Compute standardised yearly statistics
+
+```{r stats}
+# for benthic concentration
+yearly_stats(ost$date, ost$benthic, bloom_threshold=200000)
+```
+
+Inspect correlations of abundance with environmental variables
+
+```{r corr}
+library("tidyverse")
+d <- filter(ost, benthic>0)
+correlate(sqrt(d$benthic), select(d, chla:temperature), n=3)
+```
+
+Read more in the help of the functions.
