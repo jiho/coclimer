@@ -26,8 +26,9 @@ plot_seasonal <- function(x, ..., trans="identity") {
   d <- select(x, date, ...) %>%
     mutate(
       yday=lubridate::yday(date),
-      year=lubridate::year(date)
+      ydate=as.Date("2000-01-01") + yday - 1,
+      year=factor(lubridate::year(date))
     ) %>%
     tidyr::gather(key="var", val="val", ...)
-  ggplot(d, aes(yday, val)) + geom_point(size=0.5) + geom_path(size=0.25, alpha=0.5) + facet_grid(var~., scales="free_y") + scale_y_continuous(trans=trans)
+  ggplot(d, aes(ydate, val, colour=year)) + geom_point(size=0.5) + geom_path(size=0.25, alpha=0.5) + facet_grid(var~., scales="free_y") + scale_y_continuous(trans=trans) + scale_x_date(date_breaks="1 month", date_labels="%b", minor_breaks=NULL)
 }
