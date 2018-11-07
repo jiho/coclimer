@@ -23,6 +23,7 @@ Plot a multivariate time series of occurrence seasonally
 plot_seasonal(ost, benthic:planktonic)
 plot_seasonal(ost, benthic:planktonic, trans="sqrt")
 # try to define a treshold
+library("ggplot2")
 plot_seasonal(ost, benthic:planktonic, trans="sqrt") +
   geom_hline(aes(yintercept=200000), colour="red")
 }

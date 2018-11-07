@@ -12,6 +12,7 @@
 #' - integrated yearly abundance
 #'
 #' @import dplyr
+#' @export
 #'
 #' @return Table with year and one column per statistic
 #'
@@ -19,16 +20,16 @@
 #' yearly_stats(ost$date, ost$benthic, bloom_threshold=200000)
 yearly_stats <-  function(date, conc, bloom_threshold) {
   # checks
-  if (!is.Date(date)) {
+  if (! lubridate::is.Date(date)) {
     stop("`date` needs to be a Date object. Use as.Date() to convert it if needed")
   }
-  if (!is.numeric(conc)) {
+  if (! is.numeric(conc)) {
     stop("`conc` needs to be a number")
   }
 
   # interpolate to daily data, to make the rest of the computation easier
   dates <- seq(from=min(date), to=max(date), by=1)
-  d <- tibble(dates, y=approx(x=date, y=conc, xout=dates)$y) %>%
+  d <- tibble(dates, y=stats::approx(x=date, y=conc, xout=dates)$y) %>%
     rename(date=dates) %>%
     mutate(
       yday=lubridate::yday(date),

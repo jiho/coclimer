@@ -7,6 +7,8 @@
 #'
 #' @return A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance measure" is in the label of the subplot; NB: this is *not* a percentage of variance explained).
 #'
+#' @export
+#'
 #' @examples
 #' library("dplyr")
 #'
@@ -25,7 +27,7 @@ correlate <- function(y, env, n=6, ...) {
   d <- data.frame(y, env)
 
   # fit a Random Forest regression of concentration on all environmental variables
-  m <- ranger(y ~ ., data=d, importance="permutation", ...)
+  m <- ranger::ranger(y ~ ., data=d, importance="permutation", ...)
 
   # sort variable importance in decreasing order
   imp <- sort(m$variable.importance, decreasing=TRUE)
@@ -37,7 +39,7 @@ correlate <- function(y, env, n=6, ...) {
 
   # plot effect of relevant variables
   dt <- d %>%
-    select(y, vars) %>% gather(key="var", val="val", -y) %>%
+    select(y, vars) %>% tidyr::gather(key="var", val="val", -y) %>%
     mutate(
       var=factor(var, levels=vars, labels=vars_labels)
     )

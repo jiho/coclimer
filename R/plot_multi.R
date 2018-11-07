@@ -17,7 +17,7 @@ plot_multi <- function(x, ..., trans="identity") {
   if (!"date" %in% names(x)) {
     stop("`x` should have a column called date")
   }
-  if (is.Date(x$date)) {
+  if (!lubridate::is.Date(x$date)) {
     stop("`x$date` should be of class `Date`")
   }
 
