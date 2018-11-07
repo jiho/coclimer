@@ -6,6 +6,4 @@
 #'   \item{benthic} Benthic abundance in grams of Ostreopsis per gram of wet weight
 #'   \item{planktonic} Planktonic concentration in nb of cells per L.
 #' }
-#'
-#' @export
 "ost"
