@@ -14,5 +14,4 @@ Depends:
   lubridate,
   dplyr,
   tidyr,
-  castr,
   ggplot2

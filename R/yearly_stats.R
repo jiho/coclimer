@@ -28,7 +28,7 @@ yearly_stats <-  function(date, conc, bloom_threshold) {
 
   # interpolate to daily data, to make the rest of the computation easier
   dates <- seq(from=min(date), to=max(date), by=1)
-  d <- tibble(dates, y=interpolate(x=date, y=conc, xout=dates)) %>%
+  d <- tibble(dates, y=approx(x=date, y=conc, xout=dates)$y) %>%
     rename(date=dates) %>%
     mutate(
       yday=lubridate::yday(date),
