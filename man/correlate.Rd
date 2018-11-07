@@ -16,7 +16,7 @@ correlate(y, env, n = 6, ...)
 \item{...}{passed to \code{ranger::ranger()}}
 }
 \value{
-A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance measure" is in the label of the subplot; NB: this is \emph{not} a percentage of variance explained).
+A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; for regression this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
 }
 \description{
 Look for correlations with environment

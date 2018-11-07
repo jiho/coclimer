@@ -5,7 +5,7 @@
 #' @param n number of environmental variables to display, ordered in decreasing order of importance.
 #' @param ... passed to `ranger::ranger()`
 #'
-#' @return A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance measure" is in the label of the subplot; NB: this is *not* a percentage of variance explained).
+#' @return A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; for regression this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
 #'
 #' @export
 #'
@@ -27,7 +27,7 @@ correlate <- function(y, env, n=6, ...) {
   d <- data.frame(y, env)
 
   # fit a Random Forest regression of concentration on all environmental variables
-  m <- ranger::ranger(y ~ ., data=d, importance="permutation", ...)
+  m <- ranger::ranger(y ~ ., data=d, importance="impurity", ...)
 
   # sort variable importance in decreasing order
   imp <- sort(m$variable.importance, decreasing=TRUE)
