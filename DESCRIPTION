@@ -18,4 +18,9 @@ Imports:
   dplyr,
   tidyr,
   ranger,
-  ggplot2
+  ggplot2,
+  broom,
+  trend,
+  quantreg,
+  pdp,
+  purrr

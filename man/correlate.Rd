@@ -4,19 +4,26 @@
 \alias{correlate}
 \title{Look for correlations with environment}
 \usage{
-correlate(y, env, n = 6, ...)
+correlate(y, env, n = 3, tau = 0.75, min.node.size = 5,
+  grid.resolution = 20, ...)
 }
 \arguments{
-\item{y}{vector of the response variable: observed concentrations, presence/absence, etc.}
+\item{y}{vector of the response variable: observed concentrations}
 
 \item{env}{data.frame or matrix of environmental variables associated with these observations}
 
 \item{n}{number of environmental variables to display, ordered in decreasing order of importance.}
 
+\item{tau}{quantile to predict. By default this is 0.75 in order to focus on the observations of large concentrations rather than on the mean; those observations are more relevant for HABs, where the most important cases are those featuring large abundances.}
+
+\item{min.node.size}{size of the nodes in the Random Forest trees. When this is large, this allows for more robust and smoother predictions; but making it too large just flattens the response curves.}
+
+\item{grid.resolution}{resolution of the grid for partial dependence plots. Making this larger gives more precise plots but is longer to compute.}
+
 \item{...}{passed to \code{ranger::ranger()}}
 }
 \value{
-A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; for regression this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
+A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
 }
 \description{
 Look for correlations with environment
@@ -33,6 +40,5 @@ conc <- sqrt(ost_present$benthic)
 env <- select(ost_present, chla:temperature)
 correlate(conc, env, n=3)
 
-# correlate presence/absence only
-correlate(factor(ost$benthic>0), env=select(ost, chla:temperature))
+correlate(conc, env, n=3, min.node.size=1, grid.resolution=100)
 }
