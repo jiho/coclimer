@@ -42,10 +42,10 @@ yearly_stats <-  function(date, conc, bloom_threshold) {
       # maximum concentration
       max_conc=max(y, na.rm=TRUE),
       # integrated yearly concentration
-      int_conc=sum(y, na.rm=TRUE),
+      integr_conc=sum(y, na.rm=TRUE),
       # dates
       # of max concentration
-      day_max_con=yday[which.max(y)],
+      day_max_conc=yday[which.max(y)],
       # of start and end of bloom
       day_start_bloom=min(yday[bloom]),
       day_end_bloom=max(yday[bloom]),
