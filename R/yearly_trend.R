@@ -19,8 +19,10 @@ yearly_trend <- function(s, type=c("monotonous", "median")) {
   st <- tidyr::gather(s, key="stat", val="val", -year) %>%
     mutate(stat=factor(stat, levels=unique(stat)))
 
-  if (type == "monotonous") yearly_trend_mono(st)
-  if (type == "median") yearly_trend_quant(st)
+  if (type == "monotonous") p <- yearly_trend_mono(st)
+  if (type == "median") p <- yearly_trend_quant(st)
+
+  p
 }
 
 yearly_trend_mono <- function(st) {
