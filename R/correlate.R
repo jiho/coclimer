@@ -32,6 +32,7 @@ correlate <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20
 
   # fit a Random Forest regression of concentration on all environmental variables
   m <- ranger::ranger(y ~ ., data=d, importance="impurity", quantreg=TRUE, min.node.size=min.node.size, ...)
+  print(m)
 
   # sort variable importance in decreasing order
   imp <- sort(m$variable.importance, decreasing=TRUE)
