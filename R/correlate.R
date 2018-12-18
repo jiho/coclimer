@@ -38,6 +38,7 @@ correlate <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20
   (percent_imp <- round(imp/sum(imp)*100))
 
   # keep only the n most important variables
+  n <- min(length(imp), n) # if there are fewer than n, keep all of them
   vars <- names(imp[1:n])
   vars_labels <- paste0(vars, " (", percent_imp[1:n], "%)")
 
