@@ -66,5 +66,5 @@ correlate <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20
     geom_point(aes(x=val, y), size=1, alpha=0.25, shape=16) +
     geom_line(aes(x=val, y=yhat, group=yhat.id), data=pd, alpha=0.025, colour="#3366FF") +
     stat_summary(aes(x=val, y=yhat), data=pd, fun.y=median, col="#3366FF", geom="line") +
-    theme(panel.grid.major.y=element_blank(), panel.grid.minor=element_blank())
+    theme(panel.grid.major.y=element_blank(), panel.grid.minor=element_blank(), axis.title.x=element_blank())
 }
