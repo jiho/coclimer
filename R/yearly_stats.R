@@ -47,8 +47,8 @@ yearly_stats <-  function(date, conc, bloom_threshold) {
       # of max concentration
       day_max_conc=yday[which.max(y)],
       # of start and end of bloom
-      day_start_bloom=min(yday[bloom]),
-      day_end_bloom=max(yday[bloom]),
+      day_start_bloom=suppressWarnings(min(yday[bloom])) %>% ifelse(is.finite(.), ., NA),
+      day_end_bloom=suppressWarnings(max(yday[bloom])) %>% ifelse(is.finite(.), ., NA),
       # duraction of bloom
       nb_days_bloom=day_end_bloom-day_start_bloom
     )
