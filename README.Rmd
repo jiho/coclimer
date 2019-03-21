@@ -1,10 +1,10 @@
 ---
 output:
   md_document:
-    variant: markdown_github
+    variant: gfm
 ---
 
-# cloclimer
+# coclimer
 
 R package to standardise statistical analyses of time series in the CoClime project.
 
@@ -63,7 +63,7 @@ yearly_stats(ost$date, ost$benthic, bloom_threshold=200000)
 Inspect correlations of abundance with environmental variables
 
 ```{r corr}
-library("tidyverse")
+suppressMessages(library("tidyverse"))
 d <- filter(ost, benthic>0)
 correlate(sqrt(d$benthic), select(d, chla:temperature), n=3)
 ```
