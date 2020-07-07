@@ -4,8 +4,15 @@
 \alias{correlate}
 \title{Look for correlations with environment}
 \usage{
-correlate(y, env, n = 3, tau = 0.75, min.node.size = 5,
-  grid.resolution = 20, ...)
+correlate(
+  y,
+  env,
+  n = 3,
+  tau = 0.75,
+  min.node.size = 5,
+  grid.resolution = 20,
+  ...
+)
 }
 \arguments{
 \item{y}{vector of the response variable: observed concentrations}
@@ -23,7 +30,7 @@ correlate(y, env, n = 3, tau = 0.75, min.node.size = 5,
 \item{...}{passed to \code{ranger::ranger()}}
 }
 \value{
-A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
+A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100\% for all variables, but that does not mean that the model explains 100\% of the variance in the data of course).
 }
 \description{
 Look for correlations with environment
@@ -31,14 +38,15 @@ Look for correlations with environment
 \examples{
 library("dplyr")
 
-# correlate raw benthic concentrations
-correlate(ost$benthic, env=select(ost, chla:temperature), n=3)
+# correlate raw benthic concentrations with a few variables
+correlate(ost$benthic, env=select(ost, chla, temperature, poc), n=3)
 
 # correlate only non-zero, transformed concentrations
 ost_present <- filter(ost, benthic > 0)
 conc <- sqrt(ost_present$benthic)
-env <- select(ost_present, chla:temperature)
+env <- select(ost_present, chla, temperature, poc)
 correlate(conc, env, n=3)
 
-correlate(conc, env, n=3, min.node.size=1, grid.resolution=100)
+# make a finer, but also more noisy, model
+correlate(conc, env, n=3, min.node.size=1, grid.resolution=50)
 }
