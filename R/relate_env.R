@@ -49,15 +49,17 @@ relate_env <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=2
   pred_ranger <- function(object, newdata) {
     stats::predict(object, data=newdata, type="quantiles", quantiles=tau)$prediction %>% as.vector()
   }
+
   # for all relevant
-  pd <- purrr::map_dfr(vars, function(v) {
+  pd <- lapply(vars, function(v) {
     # predict the partial dependence plot
     pd <- pdp::partial(m, v, train=d, grid.resolution=grid.resolution, pred.fun=pred_ranger)
     # identify the variable
     names(pd)[1] <- "val"
     pd$var <- v
-    return(pd)
+    return(unclass(pd))
   })
+  pd <- dplyr::bind_rows(pd)
 
   # plot effect of relevant variables
   dt <- d %>%
