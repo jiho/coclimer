@@ -1,12 +1,14 @@
-#' Look for correlations with environment
+#' Link abundances with environment
 #'
-#' @param y vector of the response variable: observed concentrations
+#' @param y vector of the response variable: observed abundances/concentrations
 #' @param env data.frame or matrix of environmental variables associated with these observations
 #' @param n number of environmental variables to display, ordered in decreasing order of importance.
 #' @param tau quantile to predict. By default this is 0.75 in order to focus on the observations of large concentrations rather than on the mean; those observations are more relevant for HABs, where the most important cases are those featuring large abundances.
 #' @param min.node.size size of the nodes in the Random Forest trees. When this is large, this allows for more robust and smoother predictions; but making it too large just flattens the response curves.
 #' @param grid.resolution resolution of the grid for partial dependence plots. Making this larger gives more precise plots but is longer to compute.
 #' @param ... passed to `ranger::ranger()`
+#'
+#' @details This function performs a quantile-based regression of the response variable on environmental variables using the Random Forest algorithm. Then it computes partial dependence plots depicting the univariate effect of the `n` most relevant variables.
 #'
 #' @return A ggplot2 plot, with one subplot per variable, ordered in decreasing order of importance (the percentage of "importance" is in the label of the subplot; this is the percentage of the part of the variance that the model explains which is attributable to that variable = sums to 100% for all variables, but that does not mean that the model explains 100% of the variance in the data of course).
 #'
@@ -27,7 +29,7 @@
 #'
 #' # make a finer, but also more noisy, model
 #' correlate(conc, env, n=3, min.node.size=1, grid.resolution=50)
-correlate <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20, ...) {
+relate_env <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20, ...) {
   d <- data.frame(y, env)
 
   # fit a Random Forest regression of concentration on all environmental variables
