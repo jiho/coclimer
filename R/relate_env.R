@@ -19,16 +19,16 @@
 #' library("dplyr")
 #'
 #' # correlate raw benthic concentrations with a few variables
-#' correlate(ost$benthic, env=select(ost, chla, temperature, poc), n=3)
+#' relate_env(ost$benthic, env=select(ost, chla, temperature, poc), n=3)
 #'
 #' # correlate only non-zero, transformed concentrations
 #' ost_present <- filter(ost, benthic > 0)
 #' conc <- sqrt(ost_present$benthic)
 #' env <- select(ost_present, chla, temperature, poc)
-#' correlate(conc, env, n=3)
+#' relate_env(conc, env, n=3)
 #'
 #' # make a finer, but also more noisy, model
-#' correlate(conc, env, n=3, min.node.size=1, grid.resolution=50)
+#' relate_env(conc, env, n=3, min.node.size=1, grid.resolution=50)
 relate_env <- function(y, env, n=3, tau=0.75, min.node.size=5, grid.resolution=20, ...) {
   d <- data.frame(y, env)
 
