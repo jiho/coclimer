@@ -14,9 +14,9 @@ The package is not on CRAN. Install it with
 
 ```{r install, eval=FALSE}
 # if needed
-install.packages("devtools")
+install.packages("remotes")
 # then
-devtools::install_github("jiho/coclimer")
+remotes::install_github("jiho/coclimer")
 ```
 
 
@@ -43,7 +43,7 @@ head(ost)
 
 Your data should be made to look the same: a `date` column, columns for species concentrations/abundances, columns for environmental variables.
 
-Plot the data
+Functions `plot_multi()` and `plot_seasonnal()` allow to represent the data of multiple series graphically
 
 ```{r plot}
 # full time series
@@ -53,19 +53,19 @@ plot_multi(ost, benthic:planktonic, trans="sqrt")
 plot_seasonal(ost, benthic:planktonic, trans="sqrt")
 ```
 
-Compute standardised yearly statistics
+The function `yearly_stats()` allows to compute standardised statistics for each year.
 
 ```{r stats}
 # for benthic concentration
 yearly_stats(ost$date, ost$benthic, bloom_threshold=200000)
 ```
 
-Inspect correlations of abundance with environmental variables
+To regress abundances of HAB-forming organisms on environmental variables, use the function `relate_env()`. This computes a quantile-based regression of abundances on all environmental variables using the Random Forest algorithm, computes partial dependence plots for the most relevant variables and plots them.
 
 ```{r corr}
 suppressMessages(library("tidyverse"))
-d <- filter(ost, benthic>0)
-correlate(sqrt(d$benthic), select(d, chla:temperature), n=3)
+d <- filter(ost, benthic>0) %>% as.data.frame()
+relate_env(sqrt(d$benthic), select(d, chla:temperature), n=3)
 ```
 
-Read more in the help of the functions.
+Read the help of each function for more information.
